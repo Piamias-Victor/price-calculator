@@ -1,0 +1,6 @@
+content_script.js
+content_script.js.map
+service_worker.js
+service_worker.js.map
+injected_script.js
+injected_script.js.map
