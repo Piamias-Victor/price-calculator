@@ -1,5 +1,3 @@
-import { Button } from "@/libs/ui/button"
-
 
 export default function Index() {
   return <main id="main" className="p-safe grow w-full flex flex-col overflow-hidden">

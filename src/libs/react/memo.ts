@@ -1,5 +1,3 @@
-import { Nullable } from "@hazae41/option"
-import { Result } from "@hazae41/result"
 import { DependencyList, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Promises } from "../promises/promises"
 
@@ -33,48 +31,6 @@ export function useDisposeMemo<T extends Disposable>(factory: () => T, deps: Dep
   return state
 }
 
-export function useResultDisposeMemo<T extends Result<Disposable, unknown>>(factory: () => T, deps: DependencyList) {
-  const [state, setState] = useState<T>()
-
-  useEffect(() => {
-    const result = factory()
-
-    if (result.isErr()) {
-      setState(result)
-      return
-    }
-
-    const resource = result.get()
-    const disposer = resource?.[Symbol.dispose]
-    setState(result)
-    return disposer
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps)
-
-  return state
-}
-
-export function useNullableResultDisposeMemo<T extends Result<Nullable<Disposable>, unknown>>(factory: () => T, deps: DependencyList) {
-  const [state, setState] = useState<T>()
-
-  useEffect(() => {
-    const result = factory()
-
-    if (result.isErr()) {
-      setState(result)
-      return
-    }
-
-    const resource = result.get()
-    const disposer = resource?.[Symbol.dispose]
-    setState(result)
-    return disposer
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps)
-
-  return state
-}
-
 /**
  * Like useMemo() but it accepts a promise that will replace the pending promise
  * @param factory 
@@ -91,13 +47,10 @@ export function useAsyncReplaceMemo<T>(factory: () => Promise<T>, deps: Dependen
     aborterRef.current?.abort()
     aborterRef.current = aborter
 
-    const result = await Result.runAndWrap(factory)
-
     if (aborterRef.current !== aborter)
       return
 
     aborterRef.current = undefined
-    setState(() => result.unwrap())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps)
 
