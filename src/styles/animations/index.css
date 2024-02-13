@@ -11,6 +11,10 @@
     animation: slideup-in 300ms ease-out;
   }
 
+  .animate-slidedown-in {
+    animation: slidedown-in 300ms ease-out;
+  }
+
   .animate-opacity-scale-in {
     animation: opacity-in 300ms ease-out, scale 300ms ease-out;
   }
@@ -30,6 +34,12 @@
   @keyframes slideup-in {
     from {
       transform: translateY(calc(100vh));
+    }
+  }
+
+  @keyframes slidedown-in {
+    from {
+      transform: translateY(calc(-100vh));
     }
   }
 
