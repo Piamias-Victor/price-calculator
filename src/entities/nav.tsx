@@ -27,19 +27,19 @@ function Stock() {
       Stocks disponibles
     </MainNavButton>
       {deploy.current === true && <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
-        <NavButton path="stock">
+        <NavButton path="products">
           <Outline.FlagIcon className="size-5" />
           Mes propositions
         </NavButton>
-        <NavButton path="stock">
+        <NavButton path="best_products">
           <Outline.FireIcon className="size-5" />
           Meilleures ventes
         </NavButton>
-        <NavButton path="stock">
+        <NavButton path="offer_products">
           <Outline.ReceiptPercentIcon className="size-5" />
           Offre du Moments
         </NavButton>
-        <NavButton path="products">
+        <NavButton path="all_products">
           <Outline.GlobeAltIcon className="size-5" />
           Tous les produits
         </NavButton>
