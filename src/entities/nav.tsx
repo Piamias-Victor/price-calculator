@@ -27,7 +27,7 @@ function Stock() {
       Stocks disponibles
     </MainNavButton>
       {deploy.current === true && <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
-        <NavButton path="products">
+        <NavButton path="proposal_products">
           <Outline.FlagIcon className="size-5" />
           Mes propositions
         </NavButton>
@@ -79,15 +79,19 @@ function Order() {
       Mes commandes
     </MainNavButton>
       {deploy.current === true && <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
-        <NavButton path="stock">
+        <NavButton path="order">
+          <Outline.ShoppingCartIcon className="size-5" />
+          En préparation
+        </NavButton>
+        <NavButton path="order">
           <Outline.ClockIcon className="size-5" />
           En attentes
         </NavButton>
-        <NavButton path="stock">
-          <Outline.BookmarkSquareIcon className="size-5" />
+        <NavButton path="order">
+        <Outline.BookmarkSquareIcon className="size-5" />
           Clôturées
         </NavButton>
-        <NavButton path="stock">
+        <NavButton path="order">
           <Outline.GlobeAltIcon className="size-5" />
           Toutes
         </NavButton>

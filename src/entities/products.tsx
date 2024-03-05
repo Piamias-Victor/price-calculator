@@ -64,8 +64,6 @@ function ProductLine({ data }: ProductLineProps) {
 
     const details = useBooleanHandle(false)
 
-    console.log(data)
-
     return <>
         <tr className="border-b">
             <td className="whitespace-nowrap px-6 py-4 font-medium">{data.Ean}</td>
