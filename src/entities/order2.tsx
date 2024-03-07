@@ -25,15 +25,15 @@ export function Order2({dataset} : ProductsDataProps) {
                 <div className="overflow-hidden">
                 <table className="min-w-full text-left text-sm font-light">
                     <thead className="border-b font-medium">
-                    <tr>
-                        <th scope="col" className="px-6 py-4">EAN 13</th>
-                        <th scope="col" className="px-6 py-4">Nom</th>
-                        <th scope="col" className="px-6 py-4">Marque</th>
-                        <th scope="col" className="px-6 py-4">Péremptions</th>
-                        <th scope="col" className="px-6 py-4">États</th>
-                        <th scope="col" className="px-6 py-4">Quantité</th>
-                        <th scope="col" className="px-6 py-4">Prix</th>
-                    </tr>
+                        <tr>
+                            <th scope="col" className="px-6 py-4">EAN 13</th>
+                            <th scope="col" className="px-6 py-4">Nom</th>
+                            <th scope="col" className="px-6 py-4">Marque</th>
+                            <th scope="col" className="px-6 py-4">Péremptions</th>
+                            <th scope="col" className="px-6 py-4">États</th>
+                            <th scope="col" className="px-6 py-4">Quantité</th>
+                            <th scope="col" className="px-6 py-4">Prix</th>
+                        </tr>
                     </thead>
                     <tbody className="">
                         <OrdersLine dataset={dataset}/>
@@ -45,8 +45,6 @@ export function Order2({dataset} : ProductsDataProps) {
             <Recap dataset={dataset}/>
         </div>
     </>
-      
-    
   }
 
 function OrdersLine({dataset} : ProductsDataProps) {
@@ -89,17 +87,17 @@ function Recap({ dataset } : ProductsDataProps) {
         return stock;
       }, 0);
 
-      const totalPrice = dataset.reduce((acc, product) => {
+    const totalPrice = dataset.reduce((acc, product) => {
         if (product.Offers && product.Offers.length > 0) {
-          const firstOffers = product.Offers.slice(0, 1);
-          const priceSum = firstOffers.reduce((offerAcc, offer) => {
+            const firstOffers = product.Offers.slice(0, 1);
+            const priceSum = firstOffers.reduce((offerAcc, offer) => {
             const price = parseFloat(offer.Price.replace('€', '').trim());
             return offerAcc + price;
-          }, 0);
-          acc += priceSum;
+            }, 0);
+            acc += priceSum;
         }
         return acc;
-      }, 0);
+    }, 0);
 
     return <div className="px-4 flex flex-row-reverse items-center gap-4 text-sm">
     <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"

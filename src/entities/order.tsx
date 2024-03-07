@@ -51,6 +51,22 @@ export function Orders() {
                     </td>
                 </tr>
                 <tr onClick={() => url.set('order2')} className="border-b bg-sky-100 cursor-pointer">
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">1</td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">15/02/2024</td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">En attente de réapprovisionnement</td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">250</td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">2670 €</td>
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">2820 €</td>
+                    <td className="whitespace-nowrap  px-6 py-4">
+                        <Button.Gradient className="border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
+                            colorIndex={9}>
+                            <div className={`h-full w-full group-enabled:group-active:scale-90 transition-transform`}>
+                                <Outline.ChevronRightIcon className="size-5" />
+                            </div>
+                        </Button.Gradient>
+                    </td>
+                </tr>
+                <tr onClick={() => url.set('order2')} className="border-b bg-sky-50 cursor-pointer">
                         <td className="whitespace-nowrap px-6 py-4 font-medium">1</td>
                         <td className="whitespace-nowrap px-6 py-4 font-medium">29/03/2024</td>
                         <td className="whitespace-nowrap px-6 py-4 font-medium">En préparation</td>

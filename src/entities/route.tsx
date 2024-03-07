@@ -2,6 +2,7 @@ import { useRoute } from "@/libs/context/router"
 import { Products, ProductsData } from "./products"
 import { Orders } from "./order"
 import { Order2 } from "./order2"
+import { Create } from "./create"
 
 export default function Route() {
 
@@ -11,8 +12,6 @@ export default function Route() {
       return <Home/>
     if (url.current === "stock")
       return <Stock/>
-    if (url.current === "create")
-      return <>Créer une commande</>
     if (url.current === "setting")
       return <>Options</>
     if (url.current === "all_products")
@@ -27,6 +26,10 @@ export default function Route() {
       return <Orders/>
     if (url.current === "order2")
       return <Order2 dataset={dataset4}/>
+    if (url.current === "create")
+      return <Create dataset={dataset4}/>
+    if (url.current === "create2")
+      return <Create dataset={dataset4}/>
   }
 
   function Stock() {

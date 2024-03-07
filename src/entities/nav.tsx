@@ -57,13 +57,13 @@ function CreateOrder() {
       Créer une commande
     </MainNavButton>
       {deploy.current === true && <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
-        <NavButton path="stock">
+        <NavButton path="create">
           <Outline.ShoppingBagIcon className="size-5" />
           Nouvelles commandes
         </NavButton>
-        <NavButton path="stock">
+        <NavButton path="create2">
           <Outline.ArrowPathIcon className="size-5" />
-          Repasser commande
+          Faire une demande
         </NavButton>
     </div>
     }
