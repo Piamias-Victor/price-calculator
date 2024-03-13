@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "build": "next build",
     "clean": "rimraf ./node_modules ./.next ./out ./dist ./website ./chrome ./firefox ./safari ./package-lock.json",
     "lint": "next lint",
     "start": "serve ./dist/website"
