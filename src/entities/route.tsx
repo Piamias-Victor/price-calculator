@@ -3,17 +3,15 @@ import { Products, ProductsData } from "./products"
 import { Orders } from "./order"
 import { Order2 } from "./order2"
 import { Create } from "./create"
+import Home from "./home"
+import { OrdersClose } from "./close"
+import { OrdersWait } from "./wait"
+import { OrdersTravel } from "./travel"
 
 export default function Route() {
 
     const url = useRoute()
-  
-    if (url.current === "home")
-      return <Home/>
-    if (url.current === "stock")
-      return <Stock/>
-    if (url.current === "setting")
-      return <>Options</>
+    
     if (url.current === "all_products")
       return <Products dataset={dataset1}/>
     if (url.current === "offer_products")
@@ -24,25 +22,21 @@ export default function Route() {
       return <Products dataset={dataset4}/>
     if (url.current === "order")
       return <Orders/>
+    if (url.current === "close")
+      return <OrdersClose/>
+    if (url.current === "wait")
+      return <OrdersWait/>
+    if (url.current === "travel")
+      return <OrdersTravel/>
     if (url.current === "order2")
       return <Order2 dataset={dataset4}/>
     if (url.current === "create")
       return <Create dataset={dataset4}/>
     if (url.current === "create2")
       return <Create dataset={dataset4}/>
+    return <Home/>
   }
 
-  function Stock() {
-    return <>
-      Stocks Disponibles1
-    </>
-  }
-
-  function Home () {
-    return <>
-      Home1
-    </>
-  }
   
 
   export const dataset1 : ProductsData = [{
