@@ -1,5 +1,6 @@
 import { useRoute } from "@/libs/context/router";
 import { Outline } from "@/libs/icons/icons";
+import { ExternalDivisionLink } from "@/libs/next/anchor";
 import { Button } from "@/libs/ui/button";
 
 export default function Home() {
@@ -68,13 +69,15 @@ export default function Home() {
                         <span className="text-xl font-bold">1231 boites</span>
                     </div>
             </div>
-        <Button.Gradient className="flex items-center justify-center gap-4 rounded-lg border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
+        <ExternalDivisionLink className="w-full" href="https://app.powerbi.com/links/T5YCH65gd6?ctid=41672c37-dd29-4bb8-9261-c2ce03b4a11a&pbi_source=linkShare">
+            <Button.Gradient className="w-full flex items-center justify-center gap-4 rounded-lg border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
                     colorIndex={9}>
                 <div className="font-bold">
                     Voir les statistiques détaillées
                 </div>
                 <Outline.ArrowTopRightOnSquareIcon className="size-5" />
-        </Button.Gradient> 
+            </Button.Gradient> 
+        </ExternalDivisionLink>
         </div>
     </div>
 }
