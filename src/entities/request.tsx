@@ -6,6 +6,7 @@ import Datepicker from "react-tailwindcss-datepicker"
 import Select from "react-tailwindcss-select"
 import { useState } from "react";
 import { BooleanHandleProps } from "@/libs/react/props/boolean";
+import { useColor } from "@/libs/context/color";
 
 export default function RequestPopper(props: BooleanHandleProps) {
 
@@ -53,15 +54,17 @@ export default function RequestPopper(props: BooleanHandleProps) {
         { value: "Abimé", label: "Abimé"},
     ];
 
+    const color = useColor()
+
     return <>
-            <span className="text-center text-xl text-sky-500 font-bold">
+            <span className={`text-center text-xl ${color.current?.text} font-bold`}>
             Faire une demande
         </span>
         <div className="flex flex-col gap-8 p-8">
             <div className="bg-[#f2f2f2] rounded-[15px] flex items-center justify-center">
                 <Input.Contrast className="w-full" placeholder="Chercher le produit"/>
                 <Button.Gradient className="rounded-[10px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}>
+                    colorIndex={color.current?.color!}>
                     <div className={`h-full w-full group-enabled:group-active:scale-90 transition-transform`}>
                         <Outline.MagnifyingGlassIcon className="size-5" />
                     </div>
@@ -71,7 +74,7 @@ export default function RequestPopper(props: BooleanHandleProps) {
                 3400956369553 - DOLIPRANE 1000 mg Cpr Plq/100 - Sanofi
             </span>
             <div className="flex justify-between gap-8">
-                <div className="flex flex-col gap-4 text-center p-4 w-full rounded-t-xl rounded-l-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
+                <div className={`flex flex-col gap-4 text-center p-4 w-full rounded-t-xl rounded-l-xl text-opposite border ${color.current?.border} bg-gradient-to-r ${color.current?.gradient}`}>
                     <span className="text-sm font-bold">
                         Date de péremption mini
                     </span>
@@ -84,7 +87,7 @@ export default function RequestPopper(props: BooleanHandleProps) {
                         onChange={handleValueChange} 
                         /> 
                 </div>
-                <div className="flex flex-col gap-4 text-center p-4 w-full rounded-t-xl rounded-r-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
+                <div className={`flex flex-col gap-4 text-center p-4 w-full rounded-t-xl rounded-r-xl text-opposite border ${color.current?.border} bg-gradient-to-r ${color.current?.gradient}`}>
                     <span className="text-sm font-bold">
                         Date de péremption max
                     </span>
@@ -99,7 +102,7 @@ export default function RequestPopper(props: BooleanHandleProps) {
                 </div>
             </div>
             <div className="flex justify-between gap-8">
-                <div className="flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
+                <div className={`flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border ${color.current?.border} bg-gradient-to-r ${color.current?.gradient}`}>
                     <span className="font-bold">
                         Conditionnement des lots
                     </span>
@@ -113,7 +116,7 @@ export default function RequestPopper(props: BooleanHandleProps) {
                 </div>
             </div>
             <div className="flex justify-between gap-8">
-                <div className="flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
+                <div className={`flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border ${color.current?.border} bg-gradient-to-r ${color.current?.gradient}`}>
                     <span className="font-bold">
                         État des produits
                     </span>
@@ -128,7 +131,7 @@ export default function RequestPopper(props: BooleanHandleProps) {
             </div>
             <div className="grown"/>
             <Button.Gradient className="rounded-lg border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}
+                    colorIndex={color.current?.color!}
                     onClick={boolean?.toggle}>
                 <div className="font-bold">
                     Validez votre demande !

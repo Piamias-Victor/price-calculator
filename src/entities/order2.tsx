@@ -1,21 +1,25 @@
+import { useColor } from "@/libs/context/color";
 import { Outline } from "@/libs/icons/icons";
 import { Button } from "@/libs/ui/button";
 import { Input } from "@/libs/ui/input";
 
 export function Order2({dataset} : ProductsDataProps) {
+    
+    const color = useColor()
+
     return <>
         <div className="w-full flex items-center justify-between px-4">  
             <div className="bg-[#f2f2f2] rounded-[15px] flex items-center justify-center">
                 <Input.Contrast placeholder="Produits / Marques"/>
                 <Button.Gradient className="rounded-[10px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}>
+                    colorIndex={color.current?.color!}>
                     <div className={`h-full w-full group-enabled:group-active:scale-90 transition-transform`}>
                         <Outline.MagnifyingGlassIcon className="size-5" />
                     </div>
                 </Button.Gradient>
             </div>  
             <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}>
+                    colorIndex={color.current?.color!}>
                 En cours de Livraison
             </Button.Gradient>    
         </div>
@@ -76,6 +80,8 @@ function OrderLine({ data }: OrderLineProps) {
 
 function Recap({ dataset } : ProductsDataProps) {
 
+    const color = useColor()
+
     const totalStock = dataset.reduce((stock, product) => {
         if (product.Offers && product.Offers.length > 0) {
             const firstOffers = product.Offers.slice(0, 1);
@@ -101,23 +107,23 @@ function Recap({ dataset } : ProductsDataProps) {
 
     return <div className="px-4 flex flex-row-reverse items-center gap-4 text-sm">
     <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-            colorIndex={9}>
+            colorIndex={color.current?.color!}>
         Prix TTC - <span>{totalPrice * 1.2}</span> €
     </Button.Gradient>  
     <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-            colorIndex={9}>
+            colorIndex={color.current?.color!}>
         Prix HT - <span>{totalPrice}</span> €
     </Button.Gradient>
     <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-            colorIndex={9}>
+            colorIndex={color.current?.color!}>
         Quantité Total - <span>{totalStock}</span>
     </Button.Gradient> 
     <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-            colorIndex={9}>
+            colorIndex={color.current?.color!}>
         Date de livraison - 02/02/2024
     </Button.Gradient> 
     <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-            colorIndex={9}>
+            colorIndex={color.current?.color!}>
         Date de création - 02/01/2024
     </Button.Gradient> 
 </div>

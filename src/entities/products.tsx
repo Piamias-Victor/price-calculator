@@ -1,3 +1,4 @@
+import { useColor } from "@/libs/context/color";
 import { Outline } from "@/libs/icons/icons";
 import { useInputChange } from "@/libs/react/events";
 import { useBooleanHandle } from "@/libs/react/handles/boolean";
@@ -8,12 +9,15 @@ import { Input } from "@/libs/ui/input";
 import { useMemo } from "react";
 
 export function Products({dataset} : ProductsDataProps) {
+
+    const color = useColor()
+
     return <>
         <div className="w-full flex items-center px-4">  
             <div className="bg-[#f2f2f2] rounded-[15px] flex items-center justify-center">
                 <Input.Contrast placeholder="Produits / Marques"/>
                 <Button.Gradient className="rounded-[10px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}>
+                    colorIndex={color.current?.color!}>
                     <div className={`h-full w-full group-enabled:group-active:scale-90 transition-transform`}>
                         <Outline.MagnifyingGlassIcon className="size-5" />
                     </div>
@@ -63,6 +67,7 @@ function ProductsLine({dataset} : ProductsDataProps) {
 function ProductLine({ data }: ProductLineProps) {
 
     const details = useBooleanHandle(false)
+    const color = useColor()
 
     return <>
         <tr className="border-b">
@@ -73,7 +78,7 @@ function ProductLine({ data }: ProductLineProps) {
             <td className="whitespace-nowrap px-6 py-4">{data.Stock}</td>
             <td className="whitespace-nowrap px-6 py-4 flex items-center">
                 <Button.Gradient className="flex items-center border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}
+                    colorIndex={color.current?.color!}
                     onClick={details.toggle}>
                     <div className={`h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
                     {
@@ -108,6 +113,8 @@ function ProductLine({ data }: ProductLineProps) {
 
 function DetailsLine({data}: OfferLineProps) {
 
+    const color = useColor()
+
     return <tr className="bg-contrast">
         <td className="whitespace-nowrap px-6 py-4">{data.Expiration}</td>
         <td className="whitespace-nowrap px-6 py-4">{data.States}</td>
@@ -116,7 +123,7 @@ function DetailsLine({data}: OfferLineProps) {
         <td className="whitespace-nowrap px-6 py-4">{data.Stock}</td>
         <td className="whitespace-nowrap  px-6 py-4">
             <Button.Gradient className="border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                colorIndex={9}>
+                colorIndex={color.current?.color!}>
                 <div className={`h-full w-full group-enabled:group-active:scale-90 transition-transform`}>
                     <Outline.PlusIcon className="size-5" />
                 </div>

@@ -1,3 +1,4 @@
+import { useColor } from "@/libs/context/color";
 import { useRoute } from "@/libs/context/router";
 import { Outline } from "@/libs/icons/icons";
 import { ExternalDivisionLink } from "@/libs/next/anchor";
@@ -8,13 +9,14 @@ import Link from "next/link";
 export function OrdersTravel() {
 
     const url = useRoute()
+    const color = useColor()
 
     return <div className="flex flex-col gap-4 px-4">
         <div className="w-full flex items-center">
             <div className="bg-[#f2f2f2] rounded-[15px] flex items-center justify-center">
                 <Input.Contrast placeholder="Produits / Marques"/>
                 <Button.Gradient className="rounded-[10px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}>
+                    colorIndex={color.current?.color!}>
                     <div className={`h-full w-full group-enabled:group-active:scale-90 transition-transform`}>
                         <Outline.MagnifyingGlassIcon className="size-5" />
                     </div>
@@ -43,7 +45,7 @@ export function OrdersTravel() {
                     <td className="whitespace-nowrap px-6 py-4 font-medium">2820 €</td>
                     <td className="whitespace-nowrap  px-6 py-4">
                         <Button.Gradient className="border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                            colorIndex={9}>
+                            colorIndex={color.current?.color!}>
                             <div className={`h-full w-full group-enabled:group-active:scale-90 transition-transform`}>
                                 <Outline.ChevronRightIcon className="size-5" />
                             </div>
@@ -59,7 +61,7 @@ export function OrdersTravel() {
                     <td className="whitespace-nowrap px-6 py-4 font-medium">2820 €</td>
                     <td className="whitespace-nowrap  px-6 py-4">
                         <Button.Gradient className="border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                            colorIndex={9}>
+                            colorIndex={color.current?.color!}>
                             <div className={`h-full w-full group-enabled:group-active:scale-90 transition-transform`}>
                                 <Outline.ChevronRightIcon className="size-5" />
                             </div>

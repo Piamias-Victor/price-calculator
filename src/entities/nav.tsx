@@ -5,6 +5,7 @@ import { ChildrenProps } from "@/libs/react/props/children";
 import { BooleanHandleProps, BooleanProps } from "@/libs/react/props/boolean";
 import { UrlProps } from "@/libs/react/props/url";
 import { useBooleanHandle } from "@/libs/react/handles/boolean";
+import { useColor } from "@/libs/context/color";
 
 export function Nav() {
 
@@ -111,9 +112,10 @@ function Order() {
 function MainNavButton(props: ChildrenProps & BooleanHandleProps) {
 
   const { children, boolean } = props
+  const color = useColor()
 
   return <Button.Gradient className=" w-full border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-    colorIndex={9}
+    colorIndex={color.current?.color!}
     onClick={() => boolean?.toggle()}>
       <div className={`h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
         {children}
@@ -130,7 +132,7 @@ function NavButton(props: ChildrenProps & UrlProps & BooleanProps) {
 
   const { children, path, boolean } = props
   const url = useRoute()
-
+  const color = useColor()
 
   return <Button.Contrast className=" w-full border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
     onClick={() => url?.set(path)}>
@@ -140,7 +142,7 @@ function NavButton(props: ChildrenProps & UrlProps & BooleanProps) {
               {children}
               <Outline.ChevronRightIcon className="size-5" />
             </div>
-          : <div className={`text-sky-400 h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
+          : <div className={`${color.current?.text} h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
           {children}
           <Outline.ChevronRightIcon className="size-5" />
         </div>

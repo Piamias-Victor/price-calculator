@@ -8,23 +8,25 @@ import { BooleanHandleProps } from "@/libs/react/props/boolean";
 import { useCallback, useState } from "react";
 import { useNumber } from "@/libs/react/number";
 import { useRoute } from "@/libs/context/router";
+import { useColor } from "@/libs/context/color";
 
 export function Suivie({dataset} : SuivieDataProps) {
     const sendPopper = useBooleanHandle(false)
+    const color = useColor()
 
     return <>
        <div className="w-full flex items-center justify-between px-4">  
             <div className="bg-[#f2f2f2] rounded-[15px] flex items-center justify-center">
                 <Input.Contrast placeholder="Produits / Marques"/>
                 <Button.Gradient className="rounded-[10px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}>
+                    colorIndex={color.current?.color!}>
                     <div className={`h-full w-full group-enabled:group-active:scale-90 transition-transform`}>
                         <Outline.MagnifyingGlassIcon className="size-5" />
                     </div>
                 </Button.Gradient>
             </div>  
             <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}
+                    colorIndex={color.current?.color!}
                     onClick={sendPopper.toggle}>
                 <div className={`h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
                     Faire une demande
@@ -79,6 +81,7 @@ function SuivieLine({dataset, boolean} : any) {
 function ProductLine({ data, boolean }: any) {
 
     const details = useBooleanHandle(false)
+    const color = useColor()
 
     return <>
         <tr className="border-b">
@@ -91,7 +94,7 @@ function ProductLine({ data, boolean }: any) {
             <td className="whitespace-nowrap px-6 py-4">{data.Deal === 1 && <span>Commande validée</span>}{data.Deal === 2 && <span>Attente grossiste</span>}{data.Deal === 3 && <span>Attente réponse</span>}</td>
             <td className="whitespace-nowrap px-6 py-4 flex items-center">
                 <Button.Gradient className="flex items-center border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={9}
+                    colorIndex={color.current?.color!}
                     onClick={details.toggle}>
                     <div className={`h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
                     {
