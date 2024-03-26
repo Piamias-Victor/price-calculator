@@ -67,6 +67,10 @@ function CreateOrder() {
           <Outline.ArrowPathIcon className="size-5" />
           Faire une demande
         </NavButton>
+        <NavButton path="suivie" boolean={url.current === "suivie"}>
+          <Outline.ArrowsRightLeftIcon className="size-5" />
+          Suivie des demandes
+        </NavButton>
     </div>
     }
   </>

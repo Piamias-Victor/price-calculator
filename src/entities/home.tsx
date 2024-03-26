@@ -8,31 +8,51 @@ export default function Home() {
     const url = useRoute()
     return <div className="flex flex-col flex-center gap-8 p-8">
         <h1 className="text-center text-4xl text-sky-500 font-bold">Dashboard</h1>
-        <div className="p-4 flex flex-col flex-center gap-8 rounded-xl border-4">
+        <div className="max-h-[70vh] p-4 flex flex-col flex-center gap-8 rounded-xl border-4 overflow-y-scroll">
             <div className="flex justify-between gap-8 text-sm">
                 <div onClick={() => url.set("wait")} className="flex flex-col flex-center gap-2 cursor-pointer flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
                     <span>
-                        commande en preparation
+                        Commande en preparation
                     </span>
                     <span className="text-xl font-bold">1</span>
                 </div>
                 <div onClick={() => url.set("travel")} className="flex flex-col flex-center gap-2 cursor-pointer flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
                     <span>
-                        commandes en attentes
+                        Commande en attentes
                     </span>
                     <span className="text-xl font-bold">2</span>
                 </div>
                 <div onClick={() => url.set("close")} className="flex flex-col flex-center gap-2 cursor-pointer flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
                     <span>
-                        commande clôturée
+                        Commande clôturée
                     </span>
                     <span className="text-xl font-bold">1</span>
                 </div>
                 <div onClick={() => url.set("order")} className="flex flex-col flex-center gap-2 cursor-pointer flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
                     <span>
-                        commandes totales
+                        Commande totales
                     </span>
                     <span className="text-xl font-bold">4</span>
+                </div>
+            </div>
+            <div className="flex justify-between gap-8 text-sm">
+                <div onClick={() => url.set("suivie")} className="flex flex-col flex-center gap-2 cursor-pointer flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
+                    <span>
+                        Demande en attente réponse
+                    </span>
+                    <span className="text-xl font-bold">3</span>
+                </div>
+                <div onClick={() => url.set("suivie")} className="flex flex-col flex-center gap-2 cursor-pointer flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
+                    <span>
+                        Demande en attente grossiste
+                    </span>
+                    <span className="text-xl font-bold">2</span>
+                </div>
+                <div onClick={() => url.set("suivie")} className="flex flex-col flex-center gap-2 cursor-pointer flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border border-sky-400 bg-gradient-to-r from-sky-400 to-blue-400">
+                    <span>
+                        Demande en cours
+                    </span>
+                    <span className="text-xl font-bold">5</span>
                 </div>
             </div>
             <div className="flex justify-between gap-8 text-sm">

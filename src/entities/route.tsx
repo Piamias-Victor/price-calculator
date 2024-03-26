@@ -7,6 +7,7 @@ import Home from "./home"
 import { OrdersClose } from "./close"
 import { OrdersWait } from "./wait"
 import { OrdersTravel } from "./travel"
+import { Suivie } from "./suivie"
 
 export default function Route() {
 
@@ -34,6 +35,8 @@ export default function Route() {
       return <Create dataset={dataset4}/>
     if (url.current === "create2")
       return <Create dataset={dataset4}/>
+    if (url.current === "suivie")
+      return <Suivie dataset={dataset5}/>
     return <Home/>
   }
 
@@ -239,6 +242,70 @@ export const dataset4 : ProductsData = [{
       {
           Stock : 50,
           Expiration : '08/07/2025',
+          States : 'Ouvert',
+          Lots : 1,
+          Price : '40 €'
+      }
+  ]
+}
+]
+
+export const dataset5 : ProductsData = [{
+  Ean: '3661434005008',
+  Name : 'URIAGE CREME D EAU 40 ML',
+  Marques : 'Uriage',
+  Deal : 1,
+  Stock : 200,
+  Offers : [
+      {
+          Stock : 25,
+          Expiration : '10/01/2026',
+          States : 'Neuf',
+          Lots : 5,
+          Price : '50 €'
+      },
+      {
+          Stock : 75,
+          Expiration : '08/07/2025',
+          States : 'Ouvert',
+          Lots : 1,
+          Price : '120 €'
+      },
+  ]
+},
+{
+  Ean: '3400956369553',
+  Name : 'DOLIPRANE 1000 mg Cpr Plq/100',
+  Marques : 'Sanofi',
+  Deal : 2,
+  Stock : 150,
+  Offers : [
+      {
+          Stock : 25,
+          Expiration : '17/12/2026',
+          States : 'Neuf',
+          Lots : 20,
+          Price : '100 €'
+      }
+  ]
+},
+{
+  Ean: '3282779416139',
+  Name : 'CICALFATE CREME MAIN 100 ML',
+  Marques : 'Avene',
+  Deal : 3,
+  Stock : 70,
+  Offers : [
+      {
+          Stock : 25,
+          Expiration : '12/06/2026',
+          States : 'Neuf',
+          Lots : 10,
+          Price : '20 €'
+      },
+      {
+          Stock : 40,
+          Expiration : '08/07/2028',
           States : 'Ouvert',
           Lots : 1,
           Price : '40 €'

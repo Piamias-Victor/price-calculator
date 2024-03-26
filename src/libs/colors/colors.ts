@@ -45,7 +45,7 @@ export namespace Colors {
 export namespace Gradients {
 
   const all = [
-    ["red-400", "red-400"],
+    ["red-400", "rose-400"],
     ["orange-400", "amber-400"],
     ["amber-400", "yellow-400"],
     ["yellow-400", "yellow-400"],
@@ -77,7 +77,7 @@ export namespace Gradients {
 export namespace Gradient {
 
   const all = {
-    "red": "red",
+    "red": "rose",
     "orange": "amber",
     "amber": "yellow",
     "yellow": "yellow",
