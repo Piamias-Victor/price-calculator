@@ -8,6 +8,7 @@ import { OrdersClose } from "./close"
 import { OrdersWait } from "./wait"
 import { OrdersTravel } from "./travel"
 import { Suivie } from "./suivie"
+import Setting from "./setting"
 
 export default function Route() {
 
@@ -37,6 +38,8 @@ export default function Route() {
       return <Create dataset={dataset4}/>
     if (url.current === "suivie")
       return <Suivie dataset={dataset5}/>
+    if (url.current === "setting")
+      return <Setting/>
     return <Home/>
   }
 

@@ -102,32 +102,6 @@ export default function Home() {
             </Button.Gradient> 
         </ExternalDivisionLink>
         </div>
-        <Test/>
     </div>
 }
 
-
-export function Test() {
-
-    const color = useColor()
-
-    return <div className="">
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(0)}>0</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(1)}>1</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(2)}>2</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(3)}>3</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(4)}>4</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(5)}>5</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(6)}>6</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(7)}>7</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(8)}>8</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(9)}>9</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(10)}>10</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(11)}>11</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(12)}>12</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(13)}>13</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(14)}>14</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(15)}>15</button>
-        <button className="p-4 bg-contrast border-2" onClick={() => color.set(16)}>16</button>
-    </div>
-}
