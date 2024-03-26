@@ -17,13 +17,15 @@ import { useRoute } from "@/libs/context/router";
 import RequestPopper from "./request";
 import { send } from "process";
 import { useColor } from "@/libs/context/color";
+import { useAccount } from "@/libs/context/account";
 
 
 export function Create({dataset} : CreateDataProps) {
 
     const url = useRoute()
     const sendPopper = useBooleanHandle(url.current === 'create2')
-    const color = useColor()       
+    const color = useColor()    
+    const account = useAccount()   
 
     return <>
         <div className="w-full flex items-center justify-between px-4">  
@@ -36,14 +38,14 @@ export function Create({dataset} : CreateDataProps) {
                     </div>
                 </Button.Gradient>
             </div>  
-            <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
+            {account.current === 2 && <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
                     colorIndex={color.current?.color!}
                     onClick={sendPopper.toggle}>
                 <div className={`h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
                     Faire une demande
                     <Outline.PlusIcon className="size-5" />
                 </div>
-            </Button.Gradient>    
+            </Button.Gradient>}    
         </div>
         <div className="flex flex-col h-[75vh] overflow-y-scroll">
             <div className="overflow-x-auto">

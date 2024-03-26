@@ -1,3 +1,4 @@
+import { useAccount } from "@/libs/context/account";
 import { useColor } from "@/libs/context/color";
 import { Outline } from "@/libs/icons/icons";
 import { useInputChange } from "@/libs/react/events";
@@ -11,9 +12,10 @@ import { useMemo } from "react";
 export function Products({dataset} : ProductsDataProps) {
 
     const color = useColor()
+    const account = useAccount()
 
     return <>
-        <div className="w-full flex items-center px-4">  
+        <div className="w-full flex items-center justify-between px-4">  
             <div className="bg-[#f2f2f2] rounded-[15px] flex items-center justify-center">
                 <Input.Contrast placeholder="Produits / Marques"/>
                 <Button.Gradient className="rounded-[10px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
@@ -22,7 +24,14 @@ export function Products({dataset} : ProductsDataProps) {
                         <Outline.MagnifyingGlassIcon className="size-5" />
                     </div>
                 </Button.Gradient>
-            </div>            
+            </div>  
+            {account.current != 2 && <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
+                    colorIndex={color.current?.color!}>
+                <div className={`h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
+                    Importer un fichier
+                    <Outline.PlusIcon className="size-5" />
+                </div>
+            </Button.Gradient>}
         </div>
         <div className="flex flex-col h-[75vh] overflow-y-scroll">
             <div className="overflow-x-auto">

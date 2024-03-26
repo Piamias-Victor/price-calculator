@@ -21,13 +21,13 @@ export default function Route() {
       return <Products dataset={dataset3}/>
     if (url.current === "proposal_products")
       return <Products dataset={dataset4}/>
-    if (url.current === "order")
+    if (url.current === "order" || url.current === "order1")
       return <Orders/>
     if (url.current === "close")
       return <OrdersClose/>
-    if (url.current === "wait")
+    if (url.current === "wait" || url.current === "wait1")
       return <OrdersWait/>
-    if (url.current === "travel")
+    if (url.current === "travel" || url.current === "travel1")
       return <OrdersTravel/>
     if (url.current === "order2")
       return <Order2 dataset={dataset4}/>

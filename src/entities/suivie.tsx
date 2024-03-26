@@ -9,10 +9,12 @@ import { useCallback, useState } from "react";
 import { useNumber } from "@/libs/react/number";
 import { useRoute } from "@/libs/context/router";
 import { useColor } from "@/libs/context/color";
+import { useAccount } from "@/libs/context/account";
 
 export function Suivie({dataset} : SuivieDataProps) {
     const sendPopper = useBooleanHandle(false)
     const color = useColor()
+    const account = useAccount()
 
     return <>
        <div className="w-full flex items-center justify-between px-4">  
@@ -25,14 +27,14 @@ export function Suivie({dataset} : SuivieDataProps) {
                     </div>
                 </Button.Gradient>
             </div>  
-            <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
+            {account.current === 2 && <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
                     colorIndex={color.current?.color!}
                     onClick={sendPopper.toggle}>
                 <div className={`h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
                     Faire une demande
                     <Outline.PlusIcon className="size-5" />
                 </div>
-            </Button.Gradient>    
+            </Button.Gradient>}    
         </div>
         <div className="flex flex-col h-[75vh] overflow-y-scroll">
             <div className="overflow-x-auto">
@@ -91,7 +93,7 @@ function ProductLine({ data, boolean }: any) {
             <td className="whitespace-nowrap px-6 py-4">{data.Offers[0].Lots}</td>
             <td className="whitespace-nowrap px-6 py-4">{data.Offers[0].States}</td>
             <td className="whitespace-nowrap px-6 py-4">{data.Offers[0].Expiration}</td>
-            <td className="whitespace-nowrap px-6 py-4">{data.Deal === 1 && <span>Commande validée</span>}{data.Deal === 2 && <span>Attente grossiste</span>}{data.Deal === 3 && <span>Attente réponse</span>}</td>
+            <td className="whitespace-nowrap px-6 py-4">{data.Deal === 1 && <span>Commande validée</span>}{data.Deal === 2 && <span>Attente fournisseur</span>}{data.Deal === 3 && <span>Attente réponse</span>}</td>
             <td className="whitespace-nowrap px-6 py-4 flex items-center">
                 <Button.Gradient className="flex items-center border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
                     colorIndex={color.current?.color!}

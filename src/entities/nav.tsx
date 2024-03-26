@@ -6,13 +6,17 @@ import { BooleanHandleProps, BooleanProps } from "@/libs/react/props/boolean";
 import { UrlProps } from "@/libs/react/props/url";
 import { useBooleanHandle } from "@/libs/react/handles/boolean";
 import { useColor } from "@/libs/context/color";
+import { useAccount } from "@/libs/context/account";
 
 export function Nav() {
+
+  const account = useAccount()
 
     return <div className="flex flex-col gap-4 px-2 py-5 w-full h-[86vh] overflow-y-scroll">
       <Stock/>
       <CreateOrder/>
-      <Order/>
+      {account.current !== 4 && <Order/>}
+      {account.current !== 2 && <Shipping/>}
     </div>
   }
 
@@ -22,13 +26,14 @@ function Stock() {
 
   const deploy = useBooleanHandle(true)
   const url = useRoute()
+  const account = useAccount()
 
   return <>
     <MainNavButton boolean={deploy}>
       <Outline.ArchiveBoxArrowDownIcon className="size-5" />
       Stocks disponibles
     </MainNavButton>
-      {deploy.current === true && <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
+      {deploy.current === true && account.current === 2 ? <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
         <NavButton path="proposal_products" boolean={url.current === "proposal_products"}>
           <Outline.FlagIcon className="size-5" />
           Mes propositions
@@ -45,7 +50,21 @@ function Stock() {
           <Outline.GlobeAltIcon className="size-5" />
           Tous les produits
         </NavButton>
-    </div>
+    </div> : deploy.current === true &&
+    <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
+    <NavButton path="best_products" boolean={url.current === "best_products"}>
+      <Outline.FireIcon className="size-5" />
+      Meilleures ventes
+    </NavButton>
+    <NavButton path="offer_products" boolean={url.current === "offer_products"}>
+      <Outline.ReceiptPercentIcon className="size-5" />
+      Offre du Moments
+    </NavButton>
+    <NavButton path="all_products" boolean={url.current === "all_products"}>
+      <Outline.GlobeAltIcon className="size-5" />
+      Tous les produits
+    </NavButton>
+</div>
     }
   </>
 }
@@ -53,27 +72,29 @@ function Stock() {
 function CreateOrder() {
   const deploy = useBooleanHandle(true)
   const url = useRoute()
+  const account = useAccount()
 
   return <>
     <MainNavButton boolean={deploy}>
       <Outline.ShoppingCartIcon className="size-5" />
-      Créer une commande
+      Gérer commande
     </MainNavButton>
-      {deploy.current === true && <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
-        <NavButton path="create" boolean={url.current === "create"}>
+      {deploy.current === true && account.current != 4 ? <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
+       <NavButton path="create" boolean={url.current === "create"}>
           <Outline.ShoppingBagIcon className="size-5" />
           Nouvelles commandes
-        </NavButton>
-        <NavButton path="create2" boolean={url.current === "create2"}>
-          <Outline.ArrowPathIcon className="size-5" />
-          Faire une demande
         </NavButton>
         <NavButton path="suivie" boolean={url.current === "suivie"}>
           <Outline.ArrowsRightLeftIcon className="size-5" />
           Suivie des demandes
         </NavButton>
     </div>
-    }
+    : deploy.current === true && <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
+      <NavButton path="suivie" boolean={url.current === "suivie"}>
+        <Outline.ArrowsRightLeftIcon className="size-5" />
+        Suivie des demandes
+      </NavButton>
+  </div>}
   </>
 }
 
@@ -89,7 +110,7 @@ function Order() {
       {deploy.current === true && <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
         <NavButton path="wait" boolean={url.current === "wait"}>
           <Outline.ShoppingCartIcon className="size-5" />
-          En préparation
+          En préparations
         </NavButton>
         <NavButton path="travel" boolean={url.current === "travel"}>
           <Outline.ClockIcon className="size-5" />
@@ -100,6 +121,33 @@ function Order() {
           Clôturées
         </NavButton>
         <NavButton path="order" boolean={url.current === "order"}>
+          <Outline.GlobeAltIcon className="size-5" />
+          Toutes
+        </NavButton>
+    </div>
+    }
+  </>
+}
+
+function Shipping() {
+  const deploy = useBooleanHandle(true)
+  const url = useRoute()
+
+  return <>
+    <MainNavButton boolean={deploy}>
+      <Outline.BriefcaseIcon className="size-5" />
+      Mes livraisons
+    </MainNavButton>
+      {deploy.current === true && <div className="text-sm px-4 flex flex-col gap-3 animate-scale-in">
+        <NavButton path="wait1" boolean={url.current === "wait1"}>
+          <Outline.MapIcon className="size-5" />
+          A expédier
+        </NavButton>
+        <NavButton path="travel1" boolean={url.current === "travel1"}>
+          <Outline.ArrowsRightLeftIcon className="size-5" />
+          En cours de livraison
+        </NavButton>
+        <NavButton path="order1" boolean={url.current === "order1"}>
           <Outline.GlobeAltIcon className="size-5" />
           Toutes
         </NavButton>

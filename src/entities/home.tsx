@@ -47,7 +47,7 @@ export default function Home() {
                 </div>
                 <div onClick={() => url.set("suivie")} className={`flex flex-col flex-center gap-2 cursor-pointer flex flex-col gap-4 text-center p-4 w-full rounded-xl text-opposite border ${color.current?.border} bg-gradient-to-r ${color.current?.gradient}`}>
                     <span>
-                        Demande en attente grossiste
+                        Demande en attente fournisseur
                     </span>
                     <span className="text-xl font-bold">2</span>
                 </div>

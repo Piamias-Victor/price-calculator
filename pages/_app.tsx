@@ -1,4 +1,5 @@
 import { Color } from "@/libs/colors/colors"
+import { AccountProvider } from "@/libs/context/account"
 import { ColorProvider } from "@/libs/context/color"
 import { RouteProvider } from "@/libs/context/router"
 import { ChildrenProps } from "@/libs/react/props/children"
@@ -27,7 +28,9 @@ function Provider(props: ChildrenProps) {
 
   return <RouteProvider>
       <ColorProvider>
+      <AccountProvider>
         {children}
+      </AccountProvider>
       </ColorProvider>
   </RouteProvider>
 }
