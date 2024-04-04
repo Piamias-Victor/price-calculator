@@ -7,12 +7,30 @@ import { InputProps } from "@/libs/react/props/html";
 import { StringHandleProps } from "@/libs/react/props/string";
 import { Button } from "@/libs/ui/button";
 import { Input } from "@/libs/ui/input";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 
 export function Products({dataset} : ProductsDataProps) {
 
     const color = useColor()
     const account = useAccount()
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        const selectedFile = files[0];
+        // Faites quelque chose avec le fichier sélectionné, par exemple, le télécharger, le prévisualiser, etc.
+        console.log('Fichier sélectionné:', selectedFile);
+      }
+    };
+  
+    const handleButtonClick = () => {
+      // Cliquez sur l'élément de fichier programmable lorsque le bouton est cliqué
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+    };
 
     return <>
         <div className="w-full flex items-center justify-between px-4">  
@@ -25,13 +43,22 @@ export function Products({dataset} : ProductsDataProps) {
                     </div>
                 </Button.Gradient>
             </div>  
-            {account.current != 2 && <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
-                    colorIndex={color.current?.color!}>
+            {account.current != 2 &&<>
+                <Button.Gradient className="rounded-[15px] m-[5px] border-0 po-md hovered-or-clicked-or-focused:scale-105 !transition"
+                    colorIndex={color.current?.color!}
+                    onClick={handleButtonClick}>
                 <div className={`h-full w-full flex items-center justify-between gap-2 group-enabled:group-active:scale-90 transition-transform`}>
                     Importer un fichier
                     <Outline.PlusIcon className="size-5" />
                 </div>
-            </Button.Gradient>}
+                </Button.Gradient>
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: 'none' }}
+                    onChange={handleFileSelect} // Ajoutez le gestionnaire d'événements onChange pour traiter le fichier sélectionné
+                />
+            </>}
         </div>
         <div className="flex flex-col h-[75vh] overflow-y-scroll">
             <div className="overflow-x-auto">
