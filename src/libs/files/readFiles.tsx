@@ -1,6 +1,6 @@
 import { Row } from "../types/data";
 
-export default async function ReadFile(event: React.ChangeEvent<HTMLInputElement>) {
+export default async function ReadFile(event: React.ChangeEvent<HTMLInputElement>) : Promise<Row[]> {
     const selectedFile = event.target.files?.[0]
 
     if (selectedFile) {
@@ -11,6 +11,7 @@ export default async function ReadFile(event: React.ChangeEvent<HTMLInputElement
                     const csvContent = reader.result as string;
                     const rows: any[] = csvContent.split('\r\n').map(row => {
                         const res = row.split('\t').map(cell => {
+                            if(cell === 'n/a') return 0
                             return isNaN(parseFloat(cell)) ? cell : parseFloat(cell)
                         });
                         return res
