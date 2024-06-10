@@ -1,8 +1,10 @@
+import { Row } from "../types/data";
+
 export default async function ReadFile(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files?.[0]
 
     if (selectedFile) {
-        return new Promise<any[]>((resolve, reject) => {
+        return new Promise<Row[]>((resolve, reject) => {
             const reader = new FileReader()
             reader.onload = () => {
                 if (reader.result) {
