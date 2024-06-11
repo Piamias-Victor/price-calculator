@@ -17,7 +17,7 @@ export default function Price() {
     const [evolutionSalesPrice, setEvolutionSalesPrice] = useState(0)
     const [evolutionPurchasePrice, setEvolutionPurchasePrice] = useState(0)
     const [evolutionRotation, setEvolutionRotation] = useState(0)
-    const [selectedIndex, setSelectedIndex] = useState([])
+    const [selectedIndex, setSelectedIndex] = useState<number[]>([])
 
     const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -44,8 +44,10 @@ export default function Price() {
         let i = 1
         if(newData) {
             while(newData[i]) {
-                newData[i][_SELLINGPRICE] = csvDataCopy[i][_SELLINGPRICE] * (1 + (event.target.value / 100))
-                newData[i] = calculateRow(_SELLINGPRICE, newData[i] as Row)
+                if (selectedIndex.includes(i)) {
+                    newData[i][_SELLINGPRICE] = csvDataCopy[i][_SELLINGPRICE] * (1 + (event.target.value / 100))
+                    newData[i] = calculateRow(_SELLINGPRICE, newData[i] as Row)
+                } 
                 i++
             }
         }
@@ -58,8 +60,10 @@ export default function Price() {
         let i = 1
         if(newData) {
             while(newData[i]) {
-                newData[i][_NETPRICE] = csvDataCopy[i][_NETPRICE] * (1 + (event.target.value / 100))
-                newData[i] = calculateRow(_NETPRICE, newData[i] as Row)
+                if (selectedIndex.includes(i)) {
+                    newData[i][_NETPRICE] = csvDataCopy[i][_NETPRICE] * (1 + (event.target.value / 100))
+                    newData[i] = calculateRow(_NETPRICE, newData[i] as Row)
+                }
                 i++
             }
         }
@@ -72,12 +76,32 @@ export default function Price() {
         let i = 1
         if(newData) {
             while(newData[i]) {
-                newData[i][_ROTATION] = csvDataCopy[i][_ROTATION] * (1 + (event.target.value / 100))
-                newData[i] = calculateRow(_ROTATION, newData[i] as Row)
+                if (selectedIndex.includes(i)) {
+                    newData[i][_ROTATION] = csvDataCopy[i][_ROTATION] * (1 + (event.target.value / 100))
+                    newData[i] = calculateRow(_ROTATION, newData[i] as Row)
+                }
                 i++
             }
         }
         setCsvData(newData as Row[])
+    }
+
+    const handleSelectedIndex = (index: number, add: boolean) => {
+        let newIndex = [...selectedIndex]
+        if(index === 0 && csvData) {
+            if(add) {
+                let i = 0
+                while(csvData[i]) {
+                    newIndex.push(i)
+                    i++
+                }
+                return setSelectedIndex(newIndex)
+            }
+            return setSelectedIndex([])
+        }
+        if(add) newIndex.push(index)
+        else newIndex = newIndex.filter(item => item !== index);
+        setSelectedIndex(newIndex)
     }
 
     const changeValue = (value : number, rowIndex: number, cellIndex: number) => {
@@ -244,7 +268,16 @@ return <>
                             csvData.map((row, rowIndex) => (
                                 <tr key={rowIndex}>
                                     <td className="">
-                                        <Button.Base className="size-4 rounded-md border border-1 border-blue-500"/>                                           
+                                        {
+                                            selectedIndex.includes(rowIndex) ?
+                                            <Button.Base className="size-4 rounded-md border border-1 border-blue-500 bg-blue-500"
+                                                onClick={() => handleSelectedIndex(rowIndex, false)}>
+                                                    <Outline.CheckIcon className="text-white font-semibold"/>
+                                            </Button.Base>
+                                            :
+                                            <Button.Base className="size-4 rounded-md border border-1 border-blue-500"
+                                                onClick={() => handleSelectedIndex(rowIndex, true)}/>
+                                        }                                   
                                     </td>
                                     {
                                         row.map((cell : Data, cellIndex: number) => (
@@ -257,7 +290,6 @@ return <>
                     </tbody>
                 </table>
         </div>
-            
     }
     <div className="h-8"/>
     <div className="flex items-center gap-20 justify-center">
