@@ -1,4 +1,4 @@
-import { _COEFF, _DISCOUNT, _DISPLAYABLEVALUE, _EDITABLEVALUE, _HTPRICE, _LISTPRICE, _MARGIN, _NETPRICE, _PURCHASEPRICE, _ROTATION, _SELLINGPRICE } from "@/libs/alias/data";
+import { _COEFF, _DISCOUNT, _DISPLAYABLEVALUE, _EDITABLEVALUE, _HIGHERINGREEN, _HIGHERINRED, _HTPRICE, _LISTPRICE, _MARGIN, _NETPRICE, _PURCHASEPRICE, _ROTATION, _SELLINGPRICE } from "@/libs/alias/data";
 import { calculateRow } from "@/libs/calcul/calcul";
 import ReadFile from "@/libs/files/readFiles";
 import { Data } from "@/libs/types/data";
@@ -7,6 +7,7 @@ import { Button } from "@/libs/ui/button";
 import { Input } from "@/libs/ui/input";
 import { useState, useRef } from "react";
 import { deepCopy } from "@/libs/copy/deepCopy";
+import { Outline } from "@/libs/icons/icons";
 
 export default function Price() {
 
@@ -16,7 +17,7 @@ export default function Price() {
     const [evolutionSalesPrice, setEvolutionSalesPrice] = useState(0)
     const [evolutionPurchasePrice, setEvolutionPurchasePrice] = useState(0)
     const [evolutionRotation, setEvolutionRotation] = useState(0)
-
+    const [selectedIndex, setSelectedIndex] = useState([])
 
     const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -153,8 +154,23 @@ export default function Price() {
     }
 
     const renderData = (data: Data, rowIndex: number, cellIndex: number) => {
-        if (typeof data === 'number' && _EDITABLEVALUE.includes(cellIndex)) return <input className="max-w-[3vw]" value={parseFloat(data.toFixed(2)).toString()} type="number" onChange={(event) => handleChangeValue(event, rowIndex, cellIndex)}/>
+        const classname = colorCell(data, rowIndex, cellIndex)
+        if (typeof data === 'number' && _EDITABLEVALUE.includes(cellIndex)) return <input className={`max-w-[3vw] ${classname}`} value={parseFloat(data.toFixed(2)).toString()} type="number" onChange={(event) => handleChangeValue(event, rowIndex, cellIndex)}/>
         if (_DISPLAYABLEVALUE.includes(cellIndex)) return <span className="max-w-[3vw]">{data}</span>
+    }
+
+    const colorCell = (data : Data, rowIndex: number, cellIndex: number) => {
+        if(csvDataBase) {
+            if (_HIGHERINRED.includes(cellIndex)) {
+                if (data > csvDataBase[rowIndex][cellIndex]) return 'text-red-500 font-semibold'  
+                if (data < csvDataBase[rowIndex][cellIndex]) return 'text-green-500 font-semibold'    
+            }
+            if (_HIGHERINGREEN.includes(cellIndex)) {
+                if (data < csvDataBase[rowIndex][cellIndex]) return 'text-red-500 font-semibold'  
+                if (data > csvDataBase[rowIndex][cellIndex]) return 'text-green-500 font-semibold'    
+            }
+        }
+        
     }
     
 return <>
@@ -227,6 +243,9 @@ return <>
                         {
                             csvData.map((row, rowIndex) => (
                                 <tr key={rowIndex}>
+                                    <td className="">
+                                        <Button.Base className="size-4 rounded-md border border-1 border-blue-500"/>                                           
+                                    </td>
                                     {
                                         row.map((cell : Data, cellIndex: number) => (
                                             <td key={`${rowIndex}-${cellIndex}`}>{renderData(cell, rowIndex, cellIndex)}</td>
@@ -242,21 +261,21 @@ return <>
     }
     <div className="h-8"/>
     <div className="flex items-center gap-20 justify-center">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-[20vw]">
             <div className="flex items-end gap-2">
             <label className="block mb-2 text-lg font-bold">Evolution prix de vente % :</label>
             <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} type="number"/>
             </div>
             <input min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-[20vw]">
             <div className="flex items-end gap-2">
             <label className="block mb-2 text-lg font-bold">Evolution prix achat % :</label>
             <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} type="number"/>
             </div>
             <input min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-[20vw]">
             <div className="flex items-end gap-2">
             <label className="block mb-2 text-lg font-bold">Evolution rotation % :</label>
             <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} type="number"/>
