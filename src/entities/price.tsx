@@ -12,6 +12,7 @@ export default function Price() {
 
     const [csvData, setCsvData] = useState<Row[] | null>(null);
     const [csvDataCopy, setcsvDataCopy] = useState<Row[] | null>(null);
+    const [csvDataBase, setcsvDataBase] = useState<Row[] | null>(null);
     const [evolutionSalesPrice, setEvolutionSalesPrice] = useState(0)
     const [evolutionPurchasePrice, setEvolutionPurchasePrice] = useState(0)
     const [evolutionRotation, setEvolutionRotation] = useState(0)
@@ -23,6 +24,7 @@ export default function Price() {
         const data = await ReadFile(event);
         setCsvData(data);
         setcsvDataCopy(deepCopy(data) as Row[])
+        setcsvDataBase(deepCopy(data) as Row[])
     }
 
     const triggerFileInput = () => {
@@ -169,7 +171,7 @@ return <>
                 <div className="flex flex-col gap-2 items-start">
                     <div>
                         <span>CA avant Evolution : </span>
-                        <span>{calculateCa(csvDataCopy).toFixed(2)}</span>
+                        <span>{calculateCa(csvDataBase).toFixed(2)}</span>
                     </div>
                     <div>
                         <span>CA apres Evolution : </span>
@@ -177,7 +179,7 @@ return <>
                     </div>
                     <div>
                         <span>Gain / Perte de ca : </span>
-                        <span>{(calculateCa(csvData) - calculateCa(csvDataCopy)).toFixed(2)}</span>
+                        <span>{(calculateCa(csvData) - calculateCa(csvDataBase)).toFixed(2)}</span>
                     </div>
                 </div> 
         </Button.Gradient>
@@ -186,7 +188,7 @@ return <>
                 <div className="flex flex-col gap-2 items-start">
                     <div>
                         <span>Marge avant Evolution : </span>
-                        <span>{calculateMarge(csvDataCopy).toFixed(2)}</span>
+                        <span>{calculateMarge(csvDataBase).toFixed(2)}</span>
                     </div>
                     <div>
                         <span>Marge apres Evolution : </span>
@@ -194,7 +196,7 @@ return <>
                     </div>
                     <div>
                         <span>Gain / Perte de marge : </span>
-                        <span>{(calculateMarge(csvData) - calculateMarge(csvDataCopy)).toFixed(2)}</span>
+                        <span>{(calculateMarge(csvData) - calculateMarge(csvDataBase)).toFixed(2)}</span>
                     </div>
                 </div> 
         </Button.Gradient>
@@ -203,7 +205,7 @@ return <>
                 <div className="flex flex-col gap-2 items-start">
                     <div>
                         <span>Unite vendue avant Evolution : </span>
-                        <span>{calculateSell(csvDataCopy).toFixed(0)}</span>
+                        <span>{calculateSell(csvDataBase).toFixed(0)}</span>
                     </div>
                     <div>
                         <span>Unite vendue apres Evolution : </span>
@@ -211,7 +213,7 @@ return <>
                     </div>
                     <div>
                         <span>Gain / Perte unite vendue : </span>
-                        <span>{(calculateSell(csvData) - calculateSell(csvDataCopy)).toFixed(0)}</span>
+                        <span>{(calculateSell(csvData) - calculateSell(csvDataBase)).toFixed(0)}</span>
                     </div>
                 </div> 
         </Button.Gradient>
