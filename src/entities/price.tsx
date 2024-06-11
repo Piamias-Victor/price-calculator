@@ -113,12 +113,36 @@ export default function Price() {
         return decimalPart < min
     }
 
-    const calculateCa = () => {
+    const calculateCa = (data : Row[] | null) => {
         let res = 0
         let i = 1
-        if(csvData) {
-            while(csvData[i]) {
-                res += (csvData[i][_SELLINGPRICE] * csvData[i][_ROTATION]) * 12
+        if(data) {
+            while(data[i]) {
+                res += (data[i][_SELLINGPRICE] * data[i][_ROTATION]) * 12
+                i++
+            }
+        }
+        return res
+    }
+
+    const calculateMarge = (data : Row[] | null) => {
+        let res = 0
+        let i = 1
+        if(data) {
+            while(data[i]) {
+                res += ((data[i][_SELLINGPRICE] - data[i][_NETPRICE]) * data[i][_ROTATION]) * 12
+                i++
+            }
+        }
+        return res
+    }
+
+    const calculateSell = (data : Row[] | null) => {
+        let res = 0
+        let i = 1
+        if(data) {
+            while(data[i]) {
+                res += (data[i][_ROTATION]) * 12
                 i++
             }
         }
@@ -138,7 +162,7 @@ return <>
             Deposez votre fichier
     </Button.Gradient>
     <div className="h-8"/>
-    <div className="flex items-center gap-20 justify-center gap-4">
+    <div className="flex items-center gap-20 justify-center">
         <div className="flex flex-col gap-4">
             <div className="flex items-end gap-2">
             <label className="block mb-2 text-lg font-bold">Evolution prix de vente % :</label>
@@ -164,8 +188,8 @@ return <>
     <div className="h-8"/>
     {
         csvData &&
-        <div className="w-full overflow-y-auto h-[60vh]">
-            <table className="w-full text-sm">
+        <div className="w-full overflow-y-auto h-[50vh]">
+            <table className="w-full text-xs">
                     <tbody>
                         {
                             csvData.map((row, rowIndex) => (
@@ -197,6 +221,47 @@ return <>
         </Button.Gradient>
     </div>
     <div className="h-4"/>
-    <span>{calculateCa()}</span>
+    <div className="flex items-center gap-20 justify-center">
+        <Button.Gradient className="po-md rounded-md"
+            colorIndex={9}>
+                <div className="flex flex-col gap-2 items-start">
+                    <div>
+                        <span>CA avant Evolution : </span>
+                        <span>{calculateCa(csvDataCopy).toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>CA apres Evolution : </span>
+                        <span>{calculateCa(csvData).toFixed(2)}</span>
+                    </div>
+                </div> 
+        </Button.Gradient>
+        <Button.Gradient className="po-md rounded-md"
+            colorIndex={9}>
+                <div className="flex flex-col gap-2 items-start">
+                    <div>
+                        <span>Marge avant Evolution : </span>
+                        <span>{calculateMarge(csvDataCopy).toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>Marge apres Evolution : </span>
+                        <span>{calculateMarge(csvData).toFixed(2)}</span>
+                    </div>
+                </div> 
+        </Button.Gradient>
+        <Button.Gradient className="po-md rounded-md"
+            colorIndex={9}>
+                <div className="flex flex-col gap-2 items-start">
+                    <div>
+                        <span>Unite vendue avant Evolution : </span>
+                        <span>{calculateSell(csvDataCopy).toFixed(0)}</span>
+                    </div>
+                    <div>
+                        <span>Unite vendue apres Evolution : </span>
+                        <span>{calculateSell(csvData).toFixed(0)}</span>
+                    </div>
+                </div> 
+        </Button.Gradient>
+    </div>
+    
   </>
 }
