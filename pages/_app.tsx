@@ -6,6 +6,7 @@ import { ChildrenProps } from "@/libs/react/props/children"
 import "@/styles/index.css"
 import type { AppProps } from 'next/app'
 import Head from "next/head"
+import { StrictMode } from "react"
 
 
 
@@ -17,7 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
     </Head>
     <Provider>
      <Component {...pageProps} />
-    </Provider>
+    </Provider>    
   </>
 }
 
