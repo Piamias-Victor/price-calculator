@@ -85,6 +85,7 @@ export default function Price() {
                 newRow[cellIndex] = value
                 newData[rowIndex] = calculateRow(cellIndex, newRow as Row)
                 setCsvData(newData)
+                setcsvDataCopy(newData)
             }
         }
     }
@@ -163,27 +164,57 @@ return <>
     </Button.Gradient>
     <div className="h-8"/>
     <div className="flex items-center gap-20 justify-center">
-        <div className="flex flex-col gap-4">
-            <div className="flex items-end gap-2">
-            <label className="block mb-2 text-lg font-bold">Evolution prix de vente % :</label>
-            <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} type="number"/>
-            </div>
-            <input min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
-        </div>
-        <div className="flex flex-col gap-4">
-            <div className="flex items-end gap-2">
-            <label className="block mb-2 text-lg font-bold">Evolution prix achat % :</label>
-            <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} type="number"/>
-            </div>
-            <input min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
-        </div>
-        <div className="flex flex-col gap-4">
-            <div className="flex items-end gap-2">
-            <label className="block mb-2 text-lg font-bold">Evolution rotation % :</label>
-            <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} type="number"/>
-            </div>
-            <input min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
-        </div>
+        <Button.Gradient className="po-md rounded-md w-[15vw]"
+            colorIndex={9}>
+                <div className="flex flex-col gap-2 items-start">
+                    <div>
+                        <span>CA avant Evolution : </span>
+                        <span>{calculateCa(csvDataCopy).toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>CA apres Evolution : </span>
+                        <span>{calculateCa(csvData).toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>Gain / Perte de ca : </span>
+                        <span>{(calculateCa(csvData) - calculateCa(csvDataCopy)).toFixed(2)}</span>
+                    </div>
+                </div> 
+        </Button.Gradient>
+        <Button.Gradient className="po-md rounded-md w-[15vw]"
+            colorIndex={9}>
+                <div className="flex flex-col gap-2 items-start">
+                    <div>
+                        <span>Marge avant Evolution : </span>
+                        <span>{calculateMarge(csvDataCopy).toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>Marge apres Evolution : </span>
+                        <span>{calculateMarge(csvData).toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>Gain / Perte de marge : </span>
+                        <span>{(calculateMarge(csvData) - calculateMarge(csvDataCopy)).toFixed(2)}</span>
+                    </div>
+                </div> 
+        </Button.Gradient>
+        <Button.Gradient className="po-md rounded-md w-[15vw]"
+            colorIndex={9}>
+                <div className="flex flex-col gap-2 items-start">
+                    <div>
+                        <span>Unite vendue avant Evolution : </span>
+                        <span>{calculateSell(csvDataCopy).toFixed(0)}</span>
+                    </div>
+                    <div>
+                        <span>Unite vendue apres Evolution : </span>
+                        <span>{calculateSell(csvData).toFixed(0)}</span>
+                    </div>
+                    <div>
+                        <span>Gain / Perte unite vendue : </span>
+                        <span>{(calculateSell(csvData) - calculateSell(csvDataCopy)).toFixed(0)}</span>
+                    </div>
+                </div> 
+        </Button.Gradient>
     </div>
     <div className="h-8"/>
     {
@@ -207,7 +238,31 @@ return <>
         </div>
             
     }
-    <div className="h-4"/>
+    <div className="h-8"/>
+    <div className="flex items-center gap-20 justify-center">
+        <div className="flex flex-col gap-4">
+            <div className="flex items-end gap-2">
+            <label className="block mb-2 text-lg font-bold">Evolution prix de vente % :</label>
+            <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} type="number"/>
+            </div>
+            <input min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
+        </div>
+        <div className="flex flex-col gap-4">
+            <div className="flex items-end gap-2">
+            <label className="block mb-2 text-lg font-bold">Evolution prix achat % :</label>
+            <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} type="number"/>
+            </div>
+            <input min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
+        </div>
+        <div className="flex flex-col gap-4">
+            <div className="flex items-end gap-2">
+            <label className="block mb-2 text-lg font-bold">Evolution rotation % :</label>
+            <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} type="number"/>
+            </div>
+            <input min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
+        </div>
+    </div>
+    <div className="h-8"/>
     <div className="flex items-center gap-4">
         <Button.Gradient className="po-md"
             colorIndex={9}
@@ -220,48 +275,5 @@ return <>
                 Arrondir Prix de vente 0.49
         </Button.Gradient>
     </div>
-    <div className="h-4"/>
-    <div className="flex items-center gap-20 justify-center">
-        <Button.Gradient className="po-md rounded-md"
-            colorIndex={9}>
-                <div className="flex flex-col gap-2 items-start">
-                    <div>
-                        <span>CA avant Evolution : </span>
-                        <span>{calculateCa(csvDataCopy).toFixed(2)}</span>
-                    </div>
-                    <div>
-                        <span>CA apres Evolution : </span>
-                        <span>{calculateCa(csvData).toFixed(2)}</span>
-                    </div>
-                </div> 
-        </Button.Gradient>
-        <Button.Gradient className="po-md rounded-md"
-            colorIndex={9}>
-                <div className="flex flex-col gap-2 items-start">
-                    <div>
-                        <span>Marge avant Evolution : </span>
-                        <span>{calculateMarge(csvDataCopy).toFixed(2)}</span>
-                    </div>
-                    <div>
-                        <span>Marge apres Evolution : </span>
-                        <span>{calculateMarge(csvData).toFixed(2)}</span>
-                    </div>
-                </div> 
-        </Button.Gradient>
-        <Button.Gradient className="po-md rounded-md"
-            colorIndex={9}>
-                <div className="flex flex-col gap-2 items-start">
-                    <div>
-                        <span>Unite vendue avant Evolution : </span>
-                        <span>{calculateSell(csvDataCopy).toFixed(0)}</span>
-                    </div>
-                    <div>
-                        <span>Unite vendue apres Evolution : </span>
-                        <span>{calculateSell(csvData).toFixed(0)}</span>
-                    </div>
-                </div> 
-        </Button.Gradient>
-    </div>
-    
   </>
 }
