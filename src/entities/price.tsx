@@ -8,6 +8,7 @@ import { Input } from "@/libs/ui/input";
 import { useState, useRef } from "react";
 import { deepCopy } from "@/libs/copy/deepCopy";
 import { Outline } from "@/libs/icons/icons";
+import { dataTest, downloadCSV, exportToCsv } from "./test";
 
 export default function Price() {
 
@@ -389,6 +390,11 @@ return <>
             colorIndex={9}
             onClick={resetData}>
                 Revenir au catalogue initial
+        </Button.Gradient>
+        <Button.Gradient className="po-md rounded-md w-[15vw]"
+            colorIndex={9}
+            onClick={() => exportToCsv('test', csvData!)}>
+                Télécharger le catalogue
         </Button.Gradient>
     </div>
   </>
