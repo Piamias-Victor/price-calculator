@@ -38,6 +38,12 @@ export default function Price() {
         changeValue(parseFloat(event.target.value), rowIndex, cellIndex)
     }
 
+    const simulateChangeEvent = (value: number): React.ChangeEvent<HTMLInputElement> => {
+        return {
+          target: { value: value.toString() } as HTMLInputElement,
+        } as React.ChangeEvent<HTMLInputElement>;
+      };
+
     const handleSalesPriceEvolutionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEvolutionSalesPrice(parseFloat(event.target.value))
         const newData = deepCopy(csvData as Row[])
@@ -122,13 +128,15 @@ export default function Price() {
         let i = 1
         if(newData) {
             while(newData[i]) {
-                if (option && checkDecimal(newData[i][_SELLINGPRICE], 0.50)) {
+                if(selectedIndex.includes(i)) {
+                    if (option && checkDecimal(newData[i][_SELLINGPRICE], 0.50)) {
                     newData[i][_SELLINGPRICE] = Math.floor(newData[i][_SELLINGPRICE]) + 0.49
-                }
-                else {
-                    newData[i][_SELLINGPRICE] = Math.floor(newData[i][_SELLINGPRICE]) + 0.99
-                }
-                newData[i] = calculateRow(_SELLINGPRICE, newData[i] as Row)
+                    }
+                    else {
+                        newData[i][_SELLINGPRICE] = Math.floor(newData[i][_SELLINGPRICE]) + 0.99
+                    }
+                    newData[i] = calculateRow(_SELLINGPRICE, newData[i] as Row)
+                }  
                 i++
             }
         }
@@ -139,6 +147,20 @@ export default function Price() {
         const integerPart = Math.floor(value)
         const decimalPart = value - integerPart
         return decimalPart < min
+    }
+
+    const resetData = () => {
+        const newData = deepCopy(csvData as Row[])
+        let i = 1
+        if(newData && csvDataBase) {
+            while(newData[i]) {
+                if(selectedIndex.includes(i)) {
+                    newData[i] = csvDataBase[i]
+                }  
+                i++
+            }
+        }
+        setCsvData(newData as Row[])
     }
 
     const calculateCa = (data : Row[] | null) => {
@@ -179,8 +201,9 @@ export default function Price() {
 
     const renderData = (data: Data, rowIndex: number, cellIndex: number) => {
         const classname = colorCell(data, rowIndex, cellIndex)
-        if (typeof data === 'number' && _EDITABLEVALUE.includes(cellIndex)) return <input className={`max-w-[3vw] ${classname}`} value={parseFloat(data.toFixed(2)).toString()} type="number" onChange={(event) => handleChangeValue(event, rowIndex, cellIndex)}/>
-        if (_DISPLAYABLEVALUE.includes(cellIndex)) return <span className="max-w-[3vw]">{data}</span>
+        const color = rowIndex % 2 === 0 && 'bg-gray-300'
+        if (typeof data === 'number' && _EDITABLEVALUE.includes(cellIndex)) return <input className={`max-w-[3vw] ${classname} ${color}`} value={parseFloat(data.toFixed(2)).toString()} type="number" onChange={(event) => handleChangeValue(event, rowIndex, cellIndex)}/>
+        if (_DISPLAYABLEVALUE.includes(cellIndex)) return <span className={`max-w-[3vw] ${color}`}>{data}</span>
     }
 
     const colorCell = (data : Data, rowIndex: number, cellIndex: number) => {
@@ -199,7 +222,7 @@ export default function Price() {
     
 return <>
     <input ref={inputRef} className="hidden" placeholder="Selectionez votre fichier" type="file" onChange={HandleFileChange} accept=".tsv" />
-    <Button.Gradient className="po-md"
+    <Button.Gradient className="po-md rounded-md w-[15vw]"
         colorIndex={9}
         onClick={triggerFileInput}>
             Deposez votre fichier
@@ -266,8 +289,9 @@ return <>
                     <tbody>
                         {
                             csvData.map((row, rowIndex) => (
-                                <tr key={rowIndex}>
-                                    <td className="">
+                                rowIndex % 2 === 0 ?
+                                <tr className="bg-gray-300" key={rowIndex}>
+                                    <td className="flex items-center justify-center">
                                         {
                                             selectedIndex.includes(rowIndex) ?
                                             <Button.Base className="size-4 rounded-md border border-1 border-blue-500 bg-blue-500"
@@ -284,7 +308,26 @@ return <>
                                             <td key={`${rowIndex}-${cellIndex}`}>{renderData(cell, rowIndex, cellIndex)}</td>
                                         ))
                                     }
-                                </tr>
+                                </tr> :
+                                <tr key={rowIndex}>
+                                <td className="flex items-center justify-center">
+                                    {
+                                        selectedIndex.includes(rowIndex) ?
+                                        <Button.Base className="size-4 rounded-md border border-1 border-blue-500 bg-blue-500"
+                                            onClick={() => handleSelectedIndex(rowIndex, false)}>
+                                                <Outline.CheckIcon className="text-white font-semibold"/>
+                                        </Button.Base>
+                                        :
+                                        <Button.Base className="size-4 rounded-md border border-1 border-blue-500"
+                                            onClick={() => handleSelectedIndex(rowIndex, true)}/>
+                                    }                                   
+                                </td>
+                                {
+                                    row.map((cell : Data, cellIndex: number) => (
+                                        <td key={`${rowIndex}-${cellIndex}`}>{renderData(cell, rowIndex, cellIndex)}</td>
+                                    ))
+                                }
+                            </tr>
                             ))
                         }
                     </tbody>
@@ -294,38 +337,58 @@ return <>
     <div className="h-8"/>
     <div className="flex items-center gap-20 justify-center">
         <div className="flex flex-col gap-4 w-[20vw]">
-            <div className="flex items-end gap-2">
-            <label className="block mb-2 text-lg font-bold">Evolution prix de vente % :</label>
-            <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} type="number"/>
+            <div className="flex items-center gap-2">
+                <label className="block text-lg font-bold">Evolution prix de vente % :</label>
+                <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} type="number"/>
+                <Button.Gradient className="rounded-lg p-2"
+                    colorIndex={9}
+                    onClick={() => handleSalesPriceEvolutionChange(simulateChangeEvent(0))}>
+                    <Outline.TrashIcon className="size-6"/>
+                </Button.Gradient>
             </div>
             <input min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
         </div>
         <div className="flex flex-col gap-4 w-[20vw]">
-            <div className="flex items-end gap-2">
-            <label className="block mb-2 text-lg font-bold">Evolution prix achat % :</label>
-            <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} type="number"/>
+            <div className="flex items-center gap-2">
+                <label className="block text-lg font-bold">Evolution prix achat % :</label>
+                <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} type="number"/>
+                <Button.Gradient className="rounded-lg p-2"
+                    colorIndex={9}
+                    onClick={() => handlePurchasePriceEvolutionChange(simulateChangeEvent(0))}>
+                    <Outline.TrashIcon className="size-6"/>
+                </Button.Gradient>
             </div>
             <input min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
         </div>
         <div className="flex flex-col gap-4 w-[20vw]">
-            <div className="flex items-end gap-2">
-            <label className="block mb-2 text-lg font-bold">Evolution rotation % :</label>
-            <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} type="number"/>
+            <div className="flex items-center gap-2">
+                <label className="block text-lg font-bold">Evolution rotation % :</label>
+                <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} type="number"/>
+                <Button.Gradient className="rounded-lg p-2"
+                    colorIndex={9}
+                    onClick={() => handleRotationEvolutionChange(simulateChangeEvent(0))}>
+                    <Outline.TrashIcon className="size-6"/>
+                </Button.Gradient>
             </div>
             <input min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
         </div>
     </div>
     <div className="h-8"/>
     <div className="flex items-center gap-4">
-        <Button.Gradient className="po-md"
+        <Button.Gradient className="po-md rounded-md w-[15vw]"
             colorIndex={9}
             onClick={() => roundPrice(false)}>
                 Arrondir Prix de vente 0.99
         </Button.Gradient>
-        <Button.Gradient className="po-md"
+        <Button.Gradient className="po-md rounded-md w-[15vw]"
             colorIndex={9}
             onClick={() => roundPrice(true)}>
                 Arrondir Prix de vente 0.49
+        </Button.Gradient>
+        <Button.Gradient className="po-md rounded-md w-[15vw]"
+            colorIndex={9}
+            onClick={resetData}>
+                Revenir au catalogue initial
         </Button.Gradient>
     </div>
   </>
