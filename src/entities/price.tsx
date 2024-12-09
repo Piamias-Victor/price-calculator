@@ -8,7 +8,7 @@ import { Input } from "@/libs/ui/input";
 import { useState, useRef } from "react";
 import { deepCopy } from "@/libs/copy/deepCopy";
 import { Outline } from "@/libs/icons/icons";
-import { dataTest, downloadCSV, exportToCsv } from "./test";
+import {exportToCsv } from "./test";
 
 export default function Price() {
 
@@ -47,12 +47,12 @@ export default function Price() {
 
     const handleSalesPriceEvolutionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEvolutionSalesPrice(parseFloat(event.target.value))
-        const newData = deepCopy(csvData as Row[])
+        const newData : any = deepCopy(csvData as Row[])
         let i = 1
         if(newData) {
             while(newData[i]) {
                 if (selectedIndex.includes(i)) {
-                    newData[i][_SELLINGPRICE] = csvDataCopy[i][_SELLINGPRICE] * (1 + (event.target.value / 100))
+                    newData[i][_SELLINGPRICE] = csvDataCopy![i][_SELLINGPRICE] * (1 + (event.target.value as any / 100))
                     newData[i] = calculateRow(_SELLINGPRICE, newData[i] as Row)
                 } 
                 i++
@@ -63,12 +63,12 @@ export default function Price() {
 
     const handlePurchasePriceEvolutionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEvolutionPurchasePrice(parseFloat(event.target.value))
-        const newData = deepCopy(csvData as Row[])
+        const newData : any = deepCopy(csvData as Row[])
         let i = 1
         if(newData) {
             while(newData[i]) {
                 if (selectedIndex.includes(i)) {
-                    newData[i][_NETPRICE] = csvDataCopy[i][_NETPRICE] * (1 + (event.target.value / 100))
+                    newData[i][_NETPRICE] = csvDataCopy![i][_NETPRICE] * (1 + (event.target.value as any / 100))
                     newData[i] = calculateRow(_NETPRICE, newData[i] as Row)
                 }
                 i++
@@ -79,12 +79,12 @@ export default function Price() {
 
     const handleRotationEvolutionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEvolutionRotation(parseFloat(event.target.value))
-        const newData = deepCopy(csvData as Row[])
+        const newData : any= deepCopy(csvData as Row[])
         let i = 1
         if(newData) {
             while(newData[i]) {
                 if (selectedIndex.includes(i)) {
-                    newData[i][_ROTATION] = csvDataCopy[i][_ROTATION] * (1 + (event.target.value / 100))
+                    newData[i][_ROTATION] = csvDataCopy![i][_ROTATION] * (1 + (event.target.value as any / 100))
                     newData[i] = calculateRow(_ROTATION, newData[i] as Row)
                 }
                 i++
@@ -125,7 +125,7 @@ export default function Price() {
     }
 
     const roundPrice = (option: boolean) => {
-        const newData = deepCopy(csvData as Row[])
+        const newData : any = deepCopy(csvData as Row[])
         let i = 1
         if(newData) {
             while(newData[i]) {
@@ -223,14 +223,14 @@ export default function Price() {
     
 return <>
     <input ref={inputRef} className="hidden" placeholder="Selectionez votre fichier" type="file" onChange={HandleFileChange} accept=".tsv" />
-    <Button.Gradient className="po-md rounded-md w-[15vw]"
+    <Button.Gradient className="po-md rounded-md w-[25vw]"
         colorIndex={9}
         onClick={triggerFileInput}>
             Deposez votre fichier
     </Button.Gradient>
     <div className="h-8"/>
-    <div className="flex items-center gap-20 justify-center">
-        <Button.Gradient className="po-md rounded-md w-[15vw]"
+    <div className="flex items-center gap-20 justify-center text-sm">
+        <Button.Gradient className="po-md rounded-md w-[25vw]"
             colorIndex={9}>
                 <div className="flex flex-col gap-2 items-start">
                     <div>
@@ -247,7 +247,7 @@ return <>
                     </div>
                 </div> 
         </Button.Gradient>
-        <Button.Gradient className="po-md rounded-md w-[15vw]"
+        <Button.Gradient className="po-md rounded-md w-[25vw]"
             colorIndex={9}>
                 <div className="flex flex-col gap-2 items-start">
                     <div>
@@ -264,7 +264,7 @@ return <>
                     </div>
                 </div> 
         </Button.Gradient>
-        <Button.Gradient className="po-md rounded-md w-[15vw]"
+        <Button.Gradient className="po-md rounded-md w-[25vw]"
             colorIndex={9}>
                 <div className="flex flex-col gap-2 items-start">
                     <div>
@@ -375,7 +375,7 @@ return <>
         </div>
     </div>
     <div className="h-8"/>
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 text-sm">
         <Button.Gradient className="po-md rounded-md w-[15vw]"
             colorIndex={9}
             onClick={() => roundPrice(false)}>
@@ -393,7 +393,7 @@ return <>
         </Button.Gradient>
         <Button.Gradient className="po-md rounded-md w-[15vw]"
             colorIndex={9}
-            onClick={() => exportToCsv('test', csvData!)}>
+            onClick={() => exportToCsv('Catalogue', csvData!)}>
                 Télécharger le catalogue
         </Button.Gradient>
     </div>
