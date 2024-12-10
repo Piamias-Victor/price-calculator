@@ -8,10 +8,9 @@ import { Input } from "@/libs/ui/input";
 import { useState, useRef } from "react";
 import { deepCopy } from "@/libs/copy/deepCopy";
 import { Outline } from "@/libs/icons/icons";
-import {exportToCsv } from "./test";
+import { exportToCsv } from "./test";
 
 export default function Price() {
-
     const [csvData, setCsvData] = useState<Row[] | null>(null);
     const [csvDataCopy, setcsvDataCopy] = useState<Row[] | null>(null);
     const [csvDataBase, setcsvDataBase] = useState<Row[] | null>(null);
@@ -224,14 +223,14 @@ export default function Price() {
 return <>
     <input ref={inputRef} className="hidden" placeholder="Selectionez votre fichier" type="file" onChange={HandleFileChange} accept=".tsv" />
     <Button.Gradient className="po-md rounded-md w-[25vw]"
-        colorIndex={9}
+        colorIndex={5}
         onClick={triggerFileInput}>
             Deposez votre fichier
     </Button.Gradient>
     <div className="h-8"/>
     <div className="flex items-center gap-20 justify-center text-sm">
         <Button.Gradient className="po-md rounded-md w-[25vw]"
-            colorIndex={9}>
+            colorIndex={5}>
                 <div className="flex flex-col gap-2 items-start">
                     <div>
                         <span>CA avant Evolution : </span>
@@ -248,7 +247,7 @@ return <>
                 </div> 
         </Button.Gradient>
         <Button.Gradient className="po-md rounded-md w-[25vw]"
-            colorIndex={9}>
+            colorIndex={5}>
                 <div className="flex flex-col gap-2 items-start">
                     <div>
                         <span>Marge avant Evolution : </span>
@@ -265,7 +264,7 @@ return <>
                 </div> 
         </Button.Gradient>
         <Button.Gradient className="po-md rounded-md w-[25vw]"
-            colorIndex={9}>
+            colorIndex={5}>
                 <div className="flex flex-col gap-2 items-start">
                     <div>
                         <span>Unite vendue avant Evolution : </span>
@@ -295,12 +294,12 @@ return <>
                                     <td className="flex items-center justify-center">
                                         {
                                             selectedIndex.includes(rowIndex) ?
-                                            <Button.Base className="size-4 rounded-md border border-1 border-blue-500 bg-blue-500"
+                                            <Button.Base className="size-4 rounded-md border border-1 border-[#2A7B3B] bg-[#2A7B3B]"
                                                 onClick={() => handleSelectedIndex(rowIndex, false)}>
                                                     <Outline.CheckIcon className="text-white font-semibold"/>
                                             </Button.Base>
                                             :
-                                            <Button.Base className="size-4 rounded-md border border-1 border-blue-500"
+                                            <Button.Base className="size-4 rounded-md border border-1 border-[#2A7B3B]"
                                                 onClick={() => handleSelectedIndex(rowIndex, true)}/>
                                         }                                   
                                     </td>
@@ -314,12 +313,12 @@ return <>
                                 <td className="flex items-center justify-center">
                                     {
                                         selectedIndex.includes(rowIndex) ?
-                                        <Button.Base className="size-4 rounded-md border border-1 border-blue-500 bg-blue-500"
+                                        <Button.Base className="size-4 rounded-md border border-1 border-[#2A7B3B] bg-[#2A7B3B]"
                                             onClick={() => handleSelectedIndex(rowIndex, false)}>
                                                 <Outline.CheckIcon className="text-white font-semibold"/>
                                         </Button.Base>
                                         :
-                                        <Button.Base className="size-4 rounded-md border border-1 border-blue-500"
+                                        <Button.Base className="size-4 rounded-md border border-1 border-[#2A7B3B]"
                                             onClick={() => handleSelectedIndex(rowIndex, true)}/>
                                     }                                   
                                 </td>
@@ -342,7 +341,7 @@ return <>
                 <label className="block text-lg font-bold">Evolution prix de vente % :</label>
                 <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleSalesPriceEvolutionChange} value={evolutionSalesPrice} type="number"/>
                 <Button.Gradient className="rounded-lg p-2"
-                    colorIndex={9}
+                    colorIndex={5}
                     onClick={() => handleSalesPriceEvolutionChange(simulateChangeEvent(0))}>
                     <Outline.TrashIcon className="size-6"/>
                 </Button.Gradient>
@@ -354,7 +353,7 @@ return <>
                 <label className="block text-lg font-bold">Evolution prix achat % :</label>
                 <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handlePurchasePriceEvolutionChange} value={evolutionPurchasePrice} type="number"/>
                 <Button.Gradient className="rounded-lg p-2"
-                    colorIndex={9}
+                    colorIndex={5}
                     onClick={() => handlePurchasePriceEvolutionChange(simulateChangeEvent(0))}>
                     <Outline.TrashIcon className="size-6"/>
                 </Button.Gradient>
@@ -366,33 +365,42 @@ return <>
                 <label className="block text-lg font-bold">Evolution rotation % :</label>
                 <Input.Contrast className="rounded-lg" min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} type="number"/>
                 <Button.Gradient className="rounded-lg p-2"
-                    colorIndex={9}
+                    colorIndex={5}
                     onClick={() => handleRotationEvolutionChange(simulateChangeEvent(0))}>
                     <Outline.TrashIcon className="size-6"/>
                 </Button.Gradient>
             </div>
-            <input min={-100} max={100} step="1" onChange={handleRotationEvolutionChange} value={evolutionRotation} id="default-range" type="range" className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"/>
+            <input 
+  min={-100} 
+  max={100} 
+  step="1" 
+  onChange={handleSalesPriceEvolutionChange} 
+  value={evolutionSalesPrice} 
+  id="default-range" 
+  type="range" 
+  className="border border-1 border-gray-400 w-full h-2 bg-contrast rounded-lg appearance-none cursor-pointer"
+/>
         </div>
     </div>
     <div className="h-8"/>
     <div className="flex items-center gap-4 text-sm">
         <Button.Gradient className="po-md rounded-md w-[15vw]"
-            colorIndex={9}
+            colorIndex={5}
             onClick={() => roundPrice(false)}>
                 Arrondir Prix de vente 0.99
         </Button.Gradient>
         <Button.Gradient className="po-md rounded-md w-[15vw]"
-            colorIndex={9}
+            colorIndex={5}
             onClick={() => roundPrice(true)}>
                 Arrondir Prix de vente 0.49
         </Button.Gradient>
         <Button.Gradient className="po-md rounded-md w-[15vw]"
-            colorIndex={9}
+            colorIndex={5}
             onClick={resetData}>
                 Revenir au catalogue initial
         </Button.Gradient>
         <Button.Gradient className="po-md rounded-md w-[15vw]"
-            colorIndex={9}
+            colorIndex={5}
             onClick={() => exportToCsv('Catalogue', csvData!)}>
                 Télécharger le catalogue
         </Button.Gradient>

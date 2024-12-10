@@ -5,7 +5,7 @@ export default function Layout(props: ChildrenProps) {
 
     const {children} = props
 
-    return <main className="po-md w-full flex flex-col items-center justify-center h-full">
+    return <main className="po-md w-full flex flex-col items-center justify-center h-full bg-[#F5FFF8]">
         {children}
     </main>
 }

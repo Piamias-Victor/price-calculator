@@ -28,14 +28,14 @@ export namespace Gradient {
 
   export function Test() {
     return <div className="p-1">
-      <button className={`${Button.Base.className} ${className(9)} po-md`}>
+      <button className={`${Button.Base.className} ${className(1)} po-md`}>
         <div className={`${Button.Shrinker.className}`}>
           <Outline.GlobeAltIcon className="size-5" />
           Hello world
         </div>
       </button>
       <div className="h-1" />
-      <button className={`${Button.Base.className} ${className(9)} po-md`}>
+      <button className={`${Button.Base.className} ${className(1)} po-md`}>
         <div className={`${Button.Shrinker.className}`}>
           Hello world
         </div>
