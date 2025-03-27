@@ -523,7 +523,7 @@ export default function Price() {
                     
                     {/* Table Section */}
                     <div className="bg-white rounded-xl shadow-md overflow-hidden">
-                        <div className="max-h-[calc(100vh-450px)] overflow-auto">
+                        <div className="max-h-[calc450px] overflow-auto">
                             <table className="w-full border-collapse">
                                 <thead className="bg-gray-50 sticky top-0 z-10">
                                     <tr>
